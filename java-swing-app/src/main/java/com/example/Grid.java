@@ -66,12 +66,48 @@ public class Grid extends JPanel implements ActionListener {
     //ALL YOUR CODE GOES HERE
     public void nextGeneration() {
         //1 Create a new temporary new array to store the values of the next generation
+        int[][] nextGen = new int[rows][cols];
+
 
         //2 Visit every cell in the new temporary grid. Check the number of neighboring cells, and based on the rules determine whether the cell will be alive or dead.
         //Watch out for edge cases!
+        for(int i = 0; i < rows; i++){
+            for(int j = 0; j < cols; j++){
+                int liveNeighbord = countLiveNeighbors(i, j);
 
+                if (board[i][j] == 1){
+                    if(liveNeighbors < 2 || liveNeighbors > 3){
+                        nextGen[i][j] = 0;
+                    } else {
+                        nextGen[i][j] = 1;
+                    }
+                } else {
+                    if(liveneighbors == 3) {
+                        nextGen[i][j] = 1;
+                    }
+                }
+            }
+            board = nextGen;
+        }
         //3 Copy the values of your temporary grid to the real grid
+        private int countLiveNeighbors(int x, int y){
+            int liveNeighbors = 0;
 
+            for (int i = -1; i <= 1; i++){
+                for (int j = -1; j <=1; j++) {
+                    if (i == 0 && j == 0) continue;
+                    
+                    int nx = x+i;
+                    int ny = x+j;
+
+                    if (nx >= 0 && nc < rows && ny >= 0 && ny < cols) {
+                        liveNeighbors += board[nx][ny];
+                    }
+                    }
+                }
+            }
+            return liveNeighbors;
+        }
 
         //don't mess with this part
         repaint();
